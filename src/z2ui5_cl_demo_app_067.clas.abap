@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
 
     DATA amount            TYPE p LENGTH 14 DECIMALS 3.
     DATA currency          TYPE string.
-    DATA numeric           TYPE num10.
+    DATA numeric           TYPE numc10.
 
     DATA check_initialized TYPE abap_bool.
 
