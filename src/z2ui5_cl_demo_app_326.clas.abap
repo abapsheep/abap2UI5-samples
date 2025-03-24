@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_326 DEFINITION PUBLIC CREATE PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA unit              TYPE meins.
-    DATA numc              TYPE Z2UI5_NUMC12.
+    DATA numc              TYPE z2ui5_numc12.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -19,10 +19,6 @@ CLASS z2ui5_cl_demo_app_326 DEFINITION PUBLIC CREATE PUBLIC.
     METHODS on_event
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
-
-    METHODS convert_value
-      IMPORTING
-        !value TYPE REF TO data.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -80,39 +76,17 @@ CLASS z2ui5_cl_demo_app_326 IMPLEMENTATION.
     unit = 'ST'.   " internal ST -> external PC (if logged in in english)
     numc = 10.     " internal 0000000010 -> external 10
 
-    convert_value( REF #( unit )  ).
-    convert_value( REF #( numc )  ).
-
-  ENDMETHOD.
-
-  METHOD convert_value.
-
-    DATA lr_ele TYPE REF TO cl_abap_elemdescr.
-
     TRY.
-        lr_ele ?= cl_abap_structdescr=>describe_by_data( value->* ).
-
-        DATA(obj) = lr_ele->get_ddic_object( ).
-      CATCH cx_root.
-        RETURN.
-    ENDTRY.
-
-    DATA(convexit) = VALUE #( obj[ 1 ]-convexit OPTIONAL ).
-
-    IF convexit IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    CONCATENATE 'CONVERSION_EXIT_' convexit '_OUTPUT'
-                INTO DATA(conex).
-
-    TRY.
-        CALL FUNCTION conex
-          EXPORTING  input  = value->*
-          IMPORTING  output = value->*
+        CALL FUNCTION `CONVERSION_EXIT_CUNIT_OUTPUT`
+          EXPORTING  input  = unit
+          IMPORTING  output = unit
           EXCEPTIONS OTHERS = 99.
-        IF sy-subrc <> 0.
-        ENDIF.
+
+        CALL FUNCTION `CONVERSION_EXIT_ALPHA_OUTPUT`
+          EXPORTING  input  = numc
+          IMPORTING  output = numc
+          EXCEPTIONS OTHERS = 99.
+
       CATCH cx_root.
     ENDTRY.
 
