@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_326 DEFINITION PUBLIC CREATE PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA unit              TYPE meins.
-    DATA numc              TYPE /SCWM/TANUM.
+    DATA numc              TYPE Z2UI5_NUMC12.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
